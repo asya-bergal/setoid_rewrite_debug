@@ -56,7 +56,6 @@ def first_meaningful_line(debug_goal):
         if not "looking for" in line and \
            not "partial_application_tactic" in line and \
            not "no match for" in line and \
-           not re.search("Debug: .* : \(", line) and \
            not "(*external*)" in line:
             return line_num
 
@@ -64,7 +63,7 @@ def first_meaningful_line(debug_goal):
 def last_looking_for(debugs):
     for debug in reversed(debugs):
         searchObj = re.search("looking for \((.*)\)", debug)
-        if searchObj:
+        if searchObj and not "looking for (Params" in debug:
             return searchObj.group(1)
 
 def main():
